@@ -1,0 +1,7 @@
+g++ -c game.cpp
+g++ -c anino.cpp
+g++ -c bonus.cpp
+g++ -c head.cpp
+g++ -c prekazka.cpp
+g++ -c spravca.cpp
+g++ -o exam-challenge game.o anino.o bonus.o head.o prekazka.o spravca.o `allegro-config --libs`
