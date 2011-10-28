@@ -19,17 +19,17 @@ int main(){
 	install_timer();
 	install_sound(DIGI_AUTODETECT, MIDI_NONE, NULL);
 	set_color_depth(32);
-	if (set_gfx_mode(GFX_AUTODETECT_FULLSCREEN, 1024, 700, 0, 0) != 0)
+	if (set_gfx_mode(GFX_AUTODETECT_WINDOWED, 1024, 700, 0, 0) != 0)
 	{
 		set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
-		allegro_message("Allegro inin failure!\nPlease contact us @\n longaster@gmail.com\nwith folowing message:\n%s\n", allegro_error);
+		allegro_message("Allegro init failure!\nPlease contact us @\n longaster@gmail.com\nwith folowing message:\n%s\n", allegro_error);
 		return 1;
 	}	
 	
 	srand(time(NULL));
-	//BITMAP *loading;
-	//loading = load_bitmap("data/images/loading.bmp", NULL);
-	//blit(loading, screen, 0, 0, 200, 200, SCREEN_W, SCREEN_H);
+	BITMAP *loading;
+	loading = load_bitmap("data/images/loading.bmp", NULL);
+	blit(loading, screen, 0, 0, 270, 200, SCREEN_W, SCREEN_H);
 	
 	BITMAP *random1, *random2, *random3, *random4, *random5, *random6, *random7, *random8, *random9, *random10, *logo, *credits;
 	random1 = load_bitmap("data/images/random1.bmp", NULL);
@@ -68,7 +68,7 @@ int main(){
 	blit(logo, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 	while(! key[KEY_ENTER]);
 	while(key[KEY_ENTER]);
-
+	blit(loading, screen, 0, 0, 310, 240, SCREEN_W, SCREEN_H);
 	Spravca s;
 	
 	install_int(ZvysKrok, s.GetStepSpeed()); //nastav timer na 50Hz

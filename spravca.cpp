@@ -7,36 +7,45 @@ Spravca::Spravca(){
 	step_speed = 20; // = 50Hz
 	zorne_pole_angle = 120;
 	zorne_pole_length = 300;
-		loading = load_bitmap("data/images/loading.bmp", NULL);
-	blit(loading, screen, 0, 0, 200, 200, SCREEN_W, SCREEN_H);
-	anino_up = load_bitmap("data/images/anino_up.bmp", NULL);
-	anino_down = load_bitmap("data/images/anino_down.bmp", NULL);
-	anino_left = load_bitmap("data/images/anino_left.bmp", NULL);
-	anino_right = load_bitmap("data/images/anino_right.bmp", NULL);
-	b_chair = load_bitmap("data/images/chair.bmp", NULL);
-	b_info_bar = load_bitmap("data/images/info_bar.bmp", NULL);
-	b_pozadie = load_bitmap("data/images/podlaha3.bmp", NULL);
-	b_win = load_bitmap("data/images/win.bmp", NULL);
-	b_u_green_fast = load_bitmap("data/images/u_green_fast.bmp", NULL);
-	b_u_green_slow = load_bitmap("data/images/u_green_slow.bmp", NULL);
-	b_u_red_fast = load_bitmap("data/images/u_red_fast.bmp", NULL);
-	b_u_red_slow = load_bitmap("data/images/u_red_slow.bmp", NULL);
-	b_u_time = load_bitmap("data/images/u_time.bmp", NULL);
-	b_u_level = load_bitmap("data/images/u_level.bmp", NULL);
-	b_time_mini = load_bitmap("data/images/time_mini.bmp", NULL);
-	b_level_mini = load_bitmap("data/images/level_mini.bmp", NULL);
-	b_odpisovanie_mini = load_bitmap("data/images/odpisovanie_mini.bmp", NULL);
-	b_bonus_mini = load_bitmap("data/images/bonus_mini.bmp", NULL);
-	b_help_mini = load_bitmap("data/images/help_mini.bmp", NULL);
+
+	images = load_datafile("images.dat");
+	music = load_datafile("music.dat");
+
+	anino_up = (BITMAP*) images[img_anino_up].dat;
+	anino_down = (BITMAP*) images[img_anino_down].dat;
+	anino_left = (BITMAP*) images[img_anino_left].dat;
+	anino_right = (BITMAP*) images[img_anino_right].dat;
+	b_chair = (BITMAP*) images[img_chair].dat;
+	b_info_bar = (BITMAP*) images[img_info_bar].dat;
+	b_pozadie = (BITMAP*) images[img_podlaha3].dat;
+	b_win = (BITMAP*) images[img_win].dat;
+	b_u_green_fast = (BITMAP*) images[img_u_green_fast].dat;
+	b_u_green_slow = (BITMAP*) images[img_u_green_slow].dat;
+	b_u_red_fast = (BITMAP*) images[img_u_red_fast].dat;
+	b_u_red_slow = (BITMAP*) images[img_u_red_slow].dat;
+	b_u_time = (BITMAP*) images[img_u_time].dat;
+	b_u_level = (BITMAP*) images[img_u_level].dat;
+	b_time_mini = (BITMAP*) images[img_time_mini].dat;
+	b_level_mini = (BITMAP*) images[img_level_mini].dat;
+	b_odpisovanie_mini = (BITMAP*) images[img_odpisovanie_mini].dat;
+	b_bonus_mini = (BITMAP*) images[img_bonus_mini].dat;
+	b_help_mini = (BITMAP*) images[img_help_mini].dat;
+	//info1 = images[img_info1].dat;
+	head_brown = (BITMAP*) images[img_head_brown].dat;
+	head_green = (BITMAP*) images[img_head_green].dat;	
+	head_up = (BITMAP*) images[img_head_up].dat;
+	head_right = (BITMAP*) images[img_head_right].dat;
+	head_down = (BITMAP*) images[img_head_down].dat;
+	head_left = (BITMAP*) images[img_head_left].dat;
 	level = 0;
 	c1 = false;
-	s_portal = load_sample("data/music/portal.wav");
-	s_krok = load_sample("data/music/krok.wav");
-	s_fail = load_sample("data/music/likvidovat.wav");
-	s_opisane = load_sample("data/music/opisane.wav");
-	s_win = load_sample("data/music/win.wav");
-	s_ceruzka = load_sample("data/music/ceruzka.wav");
-	s_bonus = load_sample("data/music/bonus.wav");
+	//s_portal = load_sample("data/music/portal.wav");
+	s_krok = (SAMPLE*) music[sound_krok].dat;
+	s_fail = (SAMPLE*) music[sound_fail].dat;
+	s_opisane = (SAMPLE*) music[sound_opisane].dat;
+	s_win = (SAMPLE*) music[sound_win].dat;
+	s_ceruzka = (SAMPLE*) music[sound_ceruzka].dat;
+	s_bonus = (SAMPLE*) music[sound_bonus].dat;
 	
 	play_sample(s_ceruzka, 255, 127, 1000, TRUE);
 	
@@ -150,14 +159,6 @@ void Spravca::PrvyLevel(){
 	}		
 	//if(level != 1) play_sample(s_portal, 255, 128, 1000, FALSE);
 
-	BITMAP *head_brown, *head_green, *head_up, *head_right, *head_down, *head_left;
-	head_brown = load_bitmap("data/images/head_broen.bmp", NULL);
-	head_green = load_bitmap("data/images/head_green.bmp", NULL);	
-	head_up = load_bitmap("data/images/head_up.bmp", NULL);
-	head_right = load_bitmap("data/images/head_right.bmp", NULL);
-	head_down = load_bitmap("data/images/head_down.bmp", NULL);
-	head_left = load_bitmap("data/images/head_left.bmp", NULL);
-	
 	buffer_vsetko = create_bitmap(SCREEN_W, SCREEN_H);
 	clear_to_color(buffer_vsetko, makecol(255, 255, 175));
 	buffer_objekty = create_bitmap(SCREEN_W, SCREEN_H);
@@ -805,6 +806,9 @@ void Spravca::Help(){
 }
 
 Spravca::~Spravca(){
+	unload_datafile(images);
+	unload_datafile(music);
+	/*
 	destroy_bitmap(buffer_objekty);
 	destroy_bitmap(anino_up);
 	destroy_bitmap(anino_down);
@@ -833,5 +837,6 @@ Spravca::~Spravca(){
 	destroy_sample(s_ceruzka);
 	destroy_sample(s_win);
 	destroy_sample(s_bonus);	
+*/
 }
 

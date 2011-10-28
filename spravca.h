@@ -10,20 +10,23 @@
 #include "bonus.h"
 #include "prekazka.h"
 #include <math.h>
-
+#include "images.h"
+#include "music.h"
 using namespace std;
 
 class Spravca{
 	private:
+		DATAFILE *images, *music;
 		BITMAP *buffer_vsetko, *buffer_objekty;
 		Head *head;
 		Anino *anino;
 		Prekazka *prva, *posledna;
 		Bonus *bonus;
 		int level, step_speed, step_length, anino_speed, zorne_pole_length, zorne_pole_angle, anino_pohni_pocet, anino_pohni_const, red_head_x, red_head_y, green_head_x, green_head_y, odpisovanie, anino_pohyb_x, anino_pohyb_y, bonus_time, celkovy_time, bonus_last_time, bonus_last_type;
+		
 		bool c1, fail, odpisane, bonus_last_bool;
 		SAMPLE *s_portal, *s_krok, *s_fail, *s_opisane, *s_win, *s_ceruzka, *s_bonus;
-		BITMAP *anino_down, *anino_up, *anino_left, *anino_right, *b_chair, *b_info_bar, *b_pozadie, *b_win, *b_u_red_fast, *b_u_red_slow, *b_u_green_fast, *b_u_green_slow, *b_u_time, *b_u_level, *b_time_mini, *b_odpisovanie_mini, *b_level_mini, *b_bonus_mini, *b_help_mini, *loading;
+		BITMAP *anino_down, *anino_up, *anino_left, *anino_right, *b_chair, *b_info_bar, *b_pozadie, *b_win, *b_u_red_fast, *b_u_red_slow, *b_u_green_fast, *b_u_green_slow, *b_u_time, *b_u_level, *b_time_mini, *b_odpisovanie_mini, *b_level_mini, *b_bonus_mini, *b_help_mini, *loading, *head_brown, *head_green, *head_up, *head_right, *head_down, *head_left;
 	protected:
 	public:
 		Spravca();
