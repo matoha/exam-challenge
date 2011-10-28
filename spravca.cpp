@@ -30,17 +30,18 @@ Spravca::Spravca(){
 	b_odpisovanie_mini = (BITMAP*) images[img_odpisovanie_mini].dat;
 	b_bonus_mini = (BITMAP*) images[img_bonus_mini].dat;
 	b_help_mini = (BITMAP*) images[img_help_mini].dat;
-	//info1 = images[img_info1].dat;
+	info1 = (BITMAP*) images[img_info1].dat;
 	head_brown = (BITMAP*) images[img_head_brown].dat;
 	head_green = (BITMAP*) images[img_head_green].dat;	
 	head_up = (BITMAP*) images[img_head_up].dat;
 	head_right = (BITMAP*) images[img_head_right].dat;
 	head_down = (BITMAP*) images[img_head_down].dat;
 	head_left = (BITMAP*) images[img_head_left].dat;
+	katedra = (BITMAP*) images[img_katedra].dat;
 	level = 0;
 	c1 = false;
 	//s_portal = load_sample("data/music/portal.wav");
-	s_krok = (SAMPLE*) music[sound_krok].dat;
+	//s_krok = (SAMPLE*) music[sound_krok].dat;
 	s_fail = (SAMPLE*) music[sound_fail].dat;
 	s_opisane = (SAMPLE*) music[sound_opisane].dat;
 	s_win = (SAMPLE*) music[sound_win].dat;
@@ -57,7 +58,7 @@ void Spravca::PrvyLevel(){
 	level = 1;
 	
 	head -> SetSmer(2);
-	head -> SetObrazok(load_bitmap("data/images/head_up.bmp", NULL));
+	head -> SetObrazok(head_up);
 	
 	cout << "Level: " << level << endl;
 	
@@ -120,7 +121,7 @@ void Spravca::PrvyLevel(){
 	prva -> SetY(81);
 	//prva -> SetWidth(160);
 	//prva -> SetHeight(80);
-	prva -> SetObrazok(load_bitmap("data/images/katedra.bmp", NULL));
+	prva -> SetObrazok(katedra);
 
 	int green_head_random = rand() % 15;
 	int red_head_random;
@@ -141,11 +142,11 @@ void Spravca::PrvyLevel(){
 				posledna -> SetX(i * 200 + 85);
 				posledna -> SetY(j * 160 + 271);
 				if(green_head_random == 5 * j + i) {
-					posledna -> SetObrazok(load_bitmap("data/images/head_green.bmp", NULL));
+					posledna -> SetObrazok(head_green);
 					green_head_x = i * 200 + 85;
 					green_head_y = j * 160 + 271;
 				}
-				else posledna -> SetObrazok(load_bitmap("data/images/head_brown.bmp", NULL));
+				else posledna -> SetObrazok(head_brown);
 				posledna -> SetWidth(40);
 				posledna -> SetHeight(40);
 				pp -> SetDalsia(posledna);
@@ -166,12 +167,7 @@ void Spravca::PrvyLevel(){
 	blit(head_up, buffer_objekty, 0, 0, head -> GetX(), head -> GetY(), 40, 40);
 
 	draw_sprite(buffer_vsetko, buffer_objekty, 0, 0);
-	destroy_bitmap(head_brown);
-	destroy_bitmap(head_green);
-	destroy_bitmap(head_up);
-	destroy_bitmap(head_right);
-	destroy_bitmap(head_down);
-	destroy_bitmap(head_left);
+
 	Pohni(-1); //vykresli sa obrazovka
 }
 void Spravca::NovyLevel(){
@@ -787,7 +783,7 @@ int Spravca::MozeSaPohnut(int smer){
 
 void Spravca::Help(){
 	stop_sample(s_ceruzka);
-	blit(load_bitmap("data/images/info1.bmp", NULL), screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+	blit(info1, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 	while(! key[KEY_ENTER]);
 	while(key[KEY_ENTER]);
 	blit(load_bitmap("data/images/info2.bmp", NULL), screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
@@ -831,7 +827,6 @@ Spravca::~Spravca(){
 	destroy_bitmap(b_help_mini);
 	
 	destroy_sample(s_portal);
-	destroy_sample(s_krok);
 	destroy_sample(s_fail);
 	destroy_sample(s_opisane);
 	destroy_sample(s_ceruzka);
