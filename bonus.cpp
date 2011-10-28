@@ -2,6 +2,6 @@
 
 Bonus::Bonus(){
 	x = y = -100;
-	obrazok = load_bitmap("data/images/u_green_slow.bmp", NULL);
+	obrazok = load_bitmap("u_green_slow.bmp", NULL);
 }
 

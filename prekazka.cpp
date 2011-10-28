@@ -5,6 +5,6 @@ Prekazka::Prekazka(){
 	x = y = 0;
 	width = 130;
 	height = 70;
-	obrazok = load_bitmap("data/images/lavica.bmp", NULL);
+	obrazok = load_bitmap("lavica.bmp", NULL);
 }
 

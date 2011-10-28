@@ -1,8 +1,9 @@
-//Copyright (c) Marian Longa 2011. All rights reserved. Unauthorised redistribution is prohibited.
+//Copyright (c) 2011 Marian Longa & Martin Holicky. All rights reserved. Licensed under CC-BY-ND-NC
 #include <allegro.h>
 #include <iostream>
 #include <stdio.h>
 #include "spravca.h"
+#include "images2.h"
 using namespace std;
 
 volatile int krok = 0;
@@ -28,22 +29,24 @@ int main(){
 	
 	srand(time(NULL));
 	BITMAP *loading;
-	loading = load_bitmap("data/images/loading.bmp", NULL);
-	blit(loading, screen, 0, 0, 270, 200, SCREEN_W, SCREEN_H);
-	
-	BITMAP *random1, *random2, *random3, *random4, *random5, *random6, *random7, *random8, *random9, *random10, *logo, *credits;
-	random1 = load_bitmap("data/images/random1.bmp", NULL);
-	random2 = load_bitmap("data/images/random2.bmp", NULL);
-	random3 = load_bitmap("data/images/random3.bmp", NULL);
-	random4 = load_bitmap("data/images/random4.bmp", NULL);
-	random5 = load_bitmap("data/images/random5.bmp", NULL);
-	random6 = load_bitmap("data/images/random6.bmp", NULL);
-	random7 = load_bitmap("data/images/random7.bmp", NULL);
-	random8 = load_bitmap("data/images/random8.bmp", NULL);
-	random9 = load_bitmap("data/images/random9.bmp", NULL);
-	random10 = load_bitmap("data/images/random10.bmp", NULL);
-	logo = load_bitmap("data/images/logo.bmp", NULL);
-	credits = load_bitmap("data/images/credits.bmp", NULL);
+	loading = load_bitmap("loading.bmp", NULL);
+	blit(loading, screen, 0, 0, 310, 240, SCREEN_W, SCREEN_H);
+	DATAFILE *images2;
+	images2 = load_datafile("images2.dat");
+	BITMAP *random1, *random2, *random3, *random4, *random5, *random6, *random7, *random8, *random9, *random10, *logo, *credits, *loading2;
+	random1 = (BITMAP*) images2[img2_random1].dat;
+	loading2 = (BITMAP*) images2[img2_loading2].dat;
+	random2 = (BITMAP*) images2[img2_random2].dat;
+	random3 = (BITMAP*) images2[img2_random3].dat;
+	random4 = (BITMAP*) images2[img2_random4].dat;
+	random5 = (BITMAP*) images2[img2_random5].dat;
+	random6 = (BITMAP*) images2[img2_random6].dat;
+	random7 = (BITMAP*) images2[img2_random7].dat;
+	random8 = (BITMAP*) images2[img2_random8].dat;
+	random9 = (BITMAP*) images2[img2_random9].dat;
+	random10 = (BITMAP*) images2[img2_random10].dat;
+	logo = (BITMAP*) images2[img2_logo].dat;
+	credits = (BITMAP*) images2[img2_credits].dat;
 	LOCK_VARIABLE(krok);
 	LOCK_FUNCTION(ZvysKrok);
 	
@@ -68,7 +71,7 @@ int main(){
 	blit(logo, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 	while(! key[KEY_ENTER]);
 	while(key[KEY_ENTER]);
-	blit(loading, screen, 0, 0, 310, 240, SCREEN_W, SCREEN_H);
+	blit(loading2, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 	Spravca s;
 	
 	install_int(ZvysKrok, s.GetStepSpeed()); //nastav timer na 50Hz
@@ -102,8 +105,10 @@ int main(){
 	krok = 0;
 	install_int(ZvysKrok, 2000);
 	
+	
 	blit(credits, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
-	destroy_bitmap(random1);
+	unload_datafile(images2);
+	/*destroy_bitmap(random1);
 	destroy_bitmap(random2);
 	destroy_bitmap(random3);
 	destroy_bitmap(random4);
@@ -115,6 +120,8 @@ int main(){
 	destroy_bitmap(random10);
 	destroy_bitmap(logo);
 	destroy_bitmap(credits);
+	destroy_bitmap(loading2);
+	*/
 	while(krok == 0) if(key[KEY_ESC] || (key[KEY_ALT] && key[KEY_F4]) || key[KEY_ENTER]) break;
 	
 	return 0;

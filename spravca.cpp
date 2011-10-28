@@ -31,6 +31,10 @@ Spravca::Spravca(){
 	b_bonus_mini = (BITMAP*) images[img_bonus_mini].dat;
 	b_help_mini = (BITMAP*) images[img_help_mini].dat;
 	info1 = (BITMAP*) images[img_info1].dat;
+	info2 = (BITMAP*) images[img_info2].dat;
+	info3 = (BITMAP*) images[img_info3].dat;
+	info4 = (BITMAP*) images[img_info4].dat;
+	info5 = (BITMAP*) images[img_info5].dat;
 	head_brown = (BITMAP*) images[img_head_brown].dat;
 	head_green = (BITMAP*) images[img_head_green].dat;	
 	head_up = (BITMAP*) images[img_head_up].dat;
@@ -40,15 +44,13 @@ Spravca::Spravca(){
 	katedra = (BITMAP*) images[img_katedra].dat;
 	level = 0;
 	c1 = false;
-	//s_portal = load_sample("data/music/portal.wav");
-	//s_krok = (SAMPLE*) music[sound_krok].dat;
 	s_fail = (SAMPLE*) music[sound_fail].dat;
 	s_opisane = (SAMPLE*) music[sound_opisane].dat;
 	s_win = (SAMPLE*) music[sound_win].dat;
 	s_ceruzka = (SAMPLE*) music[sound_ceruzka].dat;
 	s_bonus = (SAMPLE*) music[sound_bonus].dat;
 	
-	play_sample(s_ceruzka, 255, 127, 1000, TRUE);
+	play_sample(s_ceruzka, 150, 127, 1000, TRUE);
 	
 	bonus = new Bonus();
 	
@@ -174,7 +176,7 @@ void Spravca::NovyLevel(){
 	level++;
 	
 	head -> SetSmer(2);
-	head -> SetObrazok(load_bitmap("data/images/head_up.bmp", NULL));
+	head -> SetObrazok(head_up);
 	
 	cout << "Level: " << level << endl;
 	
@@ -237,7 +239,7 @@ void Spravca::NovyLevel(){
 	prva -> SetY(81);
 	//prva -> SetWidth(160);
 	//prva -> SetHeight(80);
-	prva -> SetObrazok(load_bitmap("data/images/katedra.bmp", NULL));
+	prva -> SetObrazok(katedra);
 
 	int green_head_random = rand() % 15;
 	int red_head_random;
@@ -258,11 +260,11 @@ void Spravca::NovyLevel(){
 				posledna -> SetX(i * 200 + 85);
 				posledna -> SetY(j * 160 + 271);
 				if(green_head_random == 5 * j + i) {
-					posledna -> SetObrazok(load_bitmap("data/images/head_green.bmp", NULL));
+					posledna -> SetObrazok(head_green);
 					green_head_x = i * 200 + 85;
 					green_head_y = j * 160 + 271;
 				}
-				else posledna -> SetObrazok(load_bitmap("data/images/head_brown.bmp", NULL));
+				else posledna -> SetObrazok(head_brown);
 				posledna -> SetWidth(40);
 				posledna -> SetHeight(40);
 				pp -> SetDalsia(posledna);
@@ -276,13 +278,7 @@ void Spravca::NovyLevel(){
 	}		
 	//if(level != 1) play_sample(s_portal, 255, 128, 1000, FALSE);
 
-	BITMAP *head_brown, *head_green, *head_up, *head_right, *head_down, *head_left;
-	head_brown = load_bitmap("data/images/head_broen.bmp", NULL);
-	head_green = load_bitmap("data/images/head_green.bmp", NULL);	
-	head_up = load_bitmap("data/images/head_up.bmp", NULL);
-	head_right = load_bitmap("data/images/head_right.bmp", NULL);
-	head_down = load_bitmap("data/images/head_down.bmp", NULL);
-	head_left = load_bitmap("data/images/head_left.bmp", NULL);
+	
 	
 	buffer_vsetko = create_bitmap(SCREEN_W, SCREEN_H);
 	clear_to_color(buffer_vsetko, makecol(255, 255, 175));
@@ -291,12 +287,7 @@ void Spravca::NovyLevel(){
 	blit(head_up, buffer_objekty, 0, 0, head -> GetX(), head -> GetY(), 40, 40);
 
 	draw_sprite(buffer_vsetko, buffer_objekty, 0, 0);
-	destroy_bitmap(head_brown);
-	destroy_bitmap(head_green);
-	destroy_bitmap(head_up);
-	destroy_bitmap(head_right);
-	destroy_bitmap(head_down);
-	destroy_bitmap(head_left);
+
 	Pohni(-1); //vykresli sa obrazovka
 }
 
@@ -306,22 +297,22 @@ void Spravca::Pohni(int kam){
 	head -> SetOldY(head -> GetY());
 	switch(kam){//kam: -1-anino 0-lavo 1-pravo 2-hore 3-dole
 		case 0: 
-			head -> SetObrazok(load_bitmap("data/images/head_left.bmp", NULL));
+			head -> SetObrazok(head_left);
 			head -> SetSmer(0);
 			head -> SetX(head -> GetX() - MozeSaPohnut(0));
 			break;
 		case 1: 
-			head -> SetObrazok(load_bitmap("data/images/head_right.bmp", NULL));
+			head -> SetObrazok(head_right);
 			head -> SetSmer(1);
 			head -> SetX(head -> GetX() + MozeSaPohnut(1));
 			break;
 		case 2: 
-			head -> SetObrazok(load_bitmap("data/images/head_up.bmp", NULL));
+			head -> SetObrazok(head_up);
 			head -> SetSmer(2);
 			head -> SetY(head -> GetY() - MozeSaPohnut(2));
 			break;
 		case 3: 
-			head -> SetObrazok(load_bitmap("data/images/head_down.bmp", NULL));
+			head -> SetObrazok(head_down);
 			head -> SetSmer(3);
 			head -> SetY(head -> GetY() + MozeSaPohnut(3));
 			break;
@@ -722,7 +713,7 @@ void Spravca::Pohni(int kam){
 	if(prehral == true) {
 		play_sample(s_fail, 255, 128, 1000, FALSE);
 		
-		draw_sprite(screen, load_bitmap("data/images/fail.bmp", NULL), SCREEN_W / 2 - 200, SCREEN_H / 2 - 100);
+		draw_sprite(screen, load_bitmap("fail.bmp", NULL), SCREEN_W / 2 - 200, SCREEN_H / 2 - 100);
 			while(! key[KEY_ENTER]);
 	while(key[KEY_ENTER]);
 		PrvyLevel();
@@ -786,19 +777,19 @@ void Spravca::Help(){
 	blit(info1, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 	while(! key[KEY_ENTER]);
 	while(key[KEY_ENTER]);
-	blit(load_bitmap("data/images/info2.bmp", NULL), screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+	blit(info2, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 	while(! key[KEY_ENTER]);
 	while(key[KEY_ENTER]);
-	blit(load_bitmap("data/images/info3.bmp", NULL), screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+	blit(info3, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 	while(! key[KEY_ENTER]);
 	while(key[KEY_ENTER]);
-	blit(load_bitmap("data/images/info4.bmp", NULL), screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+	blit(info4, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 	while(! key[KEY_ENTER]);
 	while(key[KEY_ENTER]);
-	blit(load_bitmap("data/images/info5.bmp", NULL), screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
+	blit(info5, screen, 0, 0, 0, 0, SCREEN_W, SCREEN_H);
 	while(! key[KEY_ENTER]);
 	while(key[KEY_ENTER]);
-	play_sample(s_ceruzka, 255, 127, 1000, TRUE);
+	play_sample(s_ceruzka, 150, 127, 1000, TRUE);
 }
 
 Spravca::~Spravca(){

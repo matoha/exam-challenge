@@ -26,7 +26,7 @@ class Spravca{
 		
 		bool c1, fail, odpisane, bonus_last_bool;
 		SAMPLE *s_portal, *s_krok, *s_fail, *s_opisane, *s_win, *s_ceruzka, *s_bonus;
-		BITMAP *anino_down, *anino_up, *anino_left, *anino_right, *b_chair, *b_info_bar, *b_pozadie, *b_win, *b_u_red_fast, *b_u_red_slow, *b_u_green_fast, *b_u_green_slow, *b_u_time, *b_u_level, *b_time_mini, *b_odpisovanie_mini, *b_level_mini, *b_bonus_mini, *b_help_mini, *loading, *head_brown, *head_green, *head_up, *head_right, *head_down, *head_left;
+		BITMAP *anino_down, *anino_up, *anino_left, *anino_right, *b_chair, *b_info_bar, *b_pozadie, *b_win, *b_u_red_fast, *b_u_red_slow, *b_u_green_fast, *b_u_green_slow, *b_u_time, *b_u_level, *b_time_mini, *b_odpisovanie_mini, *b_level_mini, *b_bonus_mini, *b_help_mini, *loading, *head_brown, *head_green, *head_up, *head_right, *head_down, *head_left, *info1, *info2, *info3, *info4, *info5, *katedra;
 	protected:
 	public:
 		Spravca();
